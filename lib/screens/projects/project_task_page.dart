@@ -176,16 +176,21 @@ class TaskListWidget extends StatelessWidget {
   }
 }
 
-class TaskWidget extends StatelessWidget {
+class TaskWidget extends StatefulWidget {
   const TaskWidget({ Key? key, required this.size, required this.task }) : super(key: key);
 
   final Size size;
   final Task task;
 
   @override
+  _TaskWidgetState createState() => _TaskWidgetState();
+}
+
+class _TaskWidgetState extends State<TaskWidget> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width - 40,
+      width: widget.size.width - 40,
       margin: EdgeInsets.fromLTRB(0, kDefaultPadding * .3, 0, 0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -200,10 +205,14 @@ class TaskWidget extends StatelessWidget {
       child: Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (bool? value) {},
+              value: widget.task.completed,
+              onChanged: (bool? value) {
+                setState(() {
+                  widget.task.completed = value!;
+                });
+              },
             ),
-            Text(task.title),
+            Text(widget.task.title),
           ],
         ),
     );

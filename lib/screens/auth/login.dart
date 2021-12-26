@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/screens/auth/register.dart';
-import 'package:progress_app/services/account.dart';
+import 'package:progress_app/services/auth.dart';
 import 'package:progress_app/shared/application_logo.dart';
 import 'package:progress_app/shared/input_field.dart';
 import 'package:progress_app/shared/primary_button.dart';
@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _processing = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final AuthService _auth = AuthService();
 
   _showMsg(msg) {
     final snackBar = SnackBar(
@@ -118,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else if (password.length < 6) {
         _showMsg('The password must be at least 6 characters.');
       } else {
-        var data = await Account().login(emailController.text.trim(), passwordController.text.trim());
+        var data = await _auth.login(emailController.text.trim(), passwordController.text.trim());
 
         if (data['success'] == true) {
           Navigator.pushReplacementNamed(

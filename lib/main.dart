@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/screens/auth/login.dart';
+import 'package:progress_app/screens/auth/register.dart';
 import 'package:progress_app/screens/dashboard/dashboard_screen.dart';
 import 'package:progress_app/screens/profile/profile_screen.dart';
 import 'package:progress_app/screens/projects/create.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const CheckAuth(),
         '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
         '/dashboard': (context) => const DashBoardScreen(),
         '/projects': (context) => const ProjectsScreen(),
         '/projects/create': (context) => const CreateProjectScreen(),

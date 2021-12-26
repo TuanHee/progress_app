@@ -5,7 +5,7 @@ import 'package:progress_app/models/user.dart';
 import 'package:progress_app/services/network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Account {
+class AuthService {
 
   Future register(String name, String email, String password, String passwordConfirmation) async {
     var deviceName = await _getDeviceInfo();

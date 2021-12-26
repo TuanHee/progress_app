@@ -6,7 +6,6 @@ import 'package:progress_app/models/project.dart';
 import 'package:progress_app/screens/projects/project_information_page.dart';
 import 'package:progress_app/screens/projects/project_member_page.dart';
 import 'package:progress_app/screens/projects/project_task_page.dart';
-import 'package:progress_app/services/network.dart';
 
 class ProjectDetail extends StatefulWidget {
   const ProjectDetail({Key? key}) : super(key: key);
@@ -33,6 +32,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
           bottom: TabBar(
             indicatorColor: kPrimaryColor,
             unselectedLabelColor: Colors.grey[600],
+            labelColor: Colors.grey[900],
             tabs: const [
               Tab(
                 icon: Icon(Icons.list_alt_rounded),

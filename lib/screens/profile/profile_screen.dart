@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/models/user.dart';
-import 'package:progress_app/services/account.dart';
+import 'package:progress_app/services/auth.dart';
 import 'package:progress_app/shared/header.dart';
 import 'package:progress_app/shared/input_field.dart';
 import 'package:progress_app/shared/primary_button.dart';
@@ -15,13 +15,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final AuthService _auth = AuthService();
   late Future<User> futureUser;
 
   @override
   void initState() {
     super.initState();
 
-    futureUser = Account().getAuthUser();
+    futureUser = _auth.getAuthUser();
   }
 
   @override

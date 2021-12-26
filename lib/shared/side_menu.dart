@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/screens/auth/login.dart';
-import 'package:progress_app/services/account.dart';
+import 'package:progress_app/services/auth.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({ Key? key }) : super(key: key);
@@ -11,6 +11,7 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
+  final AuthService _auth = AuthService();
   String name = "", email = "", profileUrl = "";
 
   @override
@@ -20,7 +21,7 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   _getUser() async {
-    var user = await Account().getAuthUser();
+    var user = await _auth.getAuthUser();
 
     setState(() {
       name = user.name;
@@ -112,7 +113,7 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   void _logout() async {
-    var result = await Account().logout();
+    var result = await _auth.logout();
 
     if (result['success'] == true) {
       Navigator.pushReplacement(

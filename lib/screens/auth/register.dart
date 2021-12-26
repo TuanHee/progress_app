@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/screens/auth/login.dart';
-import 'package:progress_app/services/account.dart';
+import 'package:progress_app/services/auth.dart';
 import 'package:progress_app/shared/application_logo.dart';
 import 'package:progress_app/shared/input_field.dart';
 import 'package:progress_app/shared/primary_button.dart';
@@ -15,6 +15,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
 
+  final AuthService _auth = AuthService();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -131,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } else if (password != passwordConfirm) {
         _showMsg('The password confirmation does not match.');
       } else {
-        var data = await Account().register(name, email, password, passwordConfirm);
+        var data = await _auth.register(name, email, password, passwordConfirm);
 
         if (data['success'] == true) {
           Navigator.pushReplacementNamed(

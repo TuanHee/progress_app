@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+NetworkService _networkService = NetworkService();
+NetworkService get networkService => _networkService;
+
 class NetworkService {
   final String baseUrl = 'http://192.168.0.187:8000/api';
   String? token;

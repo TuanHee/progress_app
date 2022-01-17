@@ -41,11 +41,21 @@ class Task {
     return Task(
       id : json['id'] as int,
       title : json['title'] as String,
-      description: json['description'] == null ? json['description'] as String? : null,
+      description: json['description'] != null ? json['description'] as String? : null,
       priority: json['priority'] as String,
+      startAt: json['start_at'] as String,
+      dueAt: json['due_at'] as String,
       assignedAt : json['assigned_at'] as String,
       updatedAt : json['updated_at'] as String,
       completed: json['completed'] as bool,
+
+      attachments: json['attachments'] != null ? 
+        json['attachments'].map<Attachment>((attachment) => Attachment.fromJson(attachment)).toList() : 
+        List<Attachment>.empty(),
+
+      comments: json['comments'] != null ?
+        json['comments'].map<Comment>((comment) => Comment.fromJson(comment)).toList() :
+        List.empty(),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:progress_app/screens/profile/profile_screen.dart';
 import 'package:progress_app/screens/projects/create.dart';
 import 'package:progress_app/screens/projects/detail.dart';
 import 'package:progress_app/screens/projects/projects_list.dart';
+import 'package:progress_app/screens/projects/task_detail.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/projects': (context) => const ProjectsScreen(),
         '/projects/create': (context) => const CreateProjectScreen(),
         '/projects/detail': (context) => const ProjectDetail(),
+        '/projects/task': (context) => const TaskScreen(),
         '/profile': (context) => const ProfileScreen(),
       },
     );

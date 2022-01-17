@@ -1,20 +1,31 @@
 
+import 'package:progress_app/models/project_member.dart';
+
 class Comment{
   int id;
-  int memberId;
-  int taskId;
+  ProjectMember member;
   String content;
   String createdAt;
   String updatedAt;
-  String deletedAt;
+  String? deletedAt;
 
   Comment({
     required this.id,
-    required this.memberId,
-    required this.taskId,
+    required this.member,
     required this.content,
     required this.createdAt,
     required this.updatedAt,
-    required this.deletedAt
+    this.deletedAt
   });
+
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+      id: json['id'] as int,
+      member: ProjectMember.fromJson(json['member']),
+      content: json['content'] as String,
+      createdAt: json['created_at'] as String,
+      updatedAt: json['updated_at'] as String,
+      deletedAt: json['deleted_at'] as String?,
+    );
+  }
 }

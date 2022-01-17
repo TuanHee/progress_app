@@ -5,7 +5,7 @@ import 'package:progress_app/services/auth.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({ Key? key }) : super(key: key);
-
+  
   @override
   _SideMenuState createState() => _SideMenuState();
 }

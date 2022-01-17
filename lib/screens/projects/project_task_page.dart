@@ -1,5 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:progress_app/services/apis_service.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/models/task_list.dart';
 import 'package:progress_app/models/task.dart';
@@ -189,32 +191,41 @@ class TaskWidget extends StatefulWidget {
 class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.size.width - 40,
-      margin: EdgeInsets.fromLTRB(0, kDefaultPadding * .3, 0, 0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 5),
-            blurRadius: 10,
-            color: kPrimaryColor.withOpacity(.15)
-          )
-        ]
-      ),
-      child: Row(
-          children: [
-            Checkbox(
-              value: widget.task.completed,
-              onChanged: (bool? value) {
-                setState(() {
-                  widget.task.completed = value!;
-                });
-              },
-            ),
-            Text(widget.task.title),
-          ],
+    return GestureDetector(
+      child: Container(
+        width: widget.size.width - 40,
+        margin: EdgeInsets.fromLTRB(0, kDefaultPadding * .3, 0, 0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 5),
+              blurRadius: 10,
+              color: kPrimaryColor.withOpacity(.15)
+            )
+          ]
         ),
+        child: Row(
+            children: [
+              Checkbox(
+                value: widget.task.completed,
+                onChanged: (bool? value) {
+                  setState(() {
+                    widget.task.completed = value!;
+                  });
+                },
+              ),
+              Text(widget.task.title),
+            ],
+          ),
+      ),
+      onTap: () {
+        apiService.getTask((Task task) {
+          Navigator.pushNamed(context, '/projects/task', arguments: task);
+        }, (Response response) {
+
+        }, widget.task.id);
+      },
     );
   }
 }

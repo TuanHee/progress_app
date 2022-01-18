@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
-import 'package:progress_app/screens/dashboard/body.dart';
+import 'package:progress_app/ui/screens/dashboard/body.dart';
 import 'package:progress_app/shared/header.dart';
 import 'package:progress_app/shared/side_menu.dart';
 

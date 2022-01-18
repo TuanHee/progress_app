@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
-import 'package:progress_app/screens/auth/login.dart';
+import 'package:progress_app/ui/screens/auth/login.dart';
 import 'package:progress_app/services/auth.dart';
 
 class SideMenu extends StatefulWidget {

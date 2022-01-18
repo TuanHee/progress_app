@@ -1,43 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:progress_app/models/project.dart';
 import 'package:progress_app/shared/constants.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
     Key? key,
     required this.size,
+    required this.project,
   }) : super(key: key);
 
   final Size size;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        left: kDefaultPadding,
-        top: kDefaultPadding / 2,
-        bottom: kDefaultPadding,
-      ),
+    return SizedBox(
       width: size.width / 2,
       child: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, '/projects/detail',
+            arguments: project),
         child: Container(
           padding: const EdgeInsets.all(kDefaultPadding / 2),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 10),
-                blurRadius: 30,
-                color: kPrimaryColor.withOpacity(0.15)
-              )
+                  offset: Offset(1, 1),
+                  blurRadius: 10,
+                  color: Colors.grey.withOpacity(0.3))
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "Title",
-                style: TextStyle(
+                project.title,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -46,22 +45,36 @@ class ProjectCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: kDefaultPadding * .5),
                 child: Row(
                   children: [
-                    Icon(Icons.list_alt_outlined, color: Colors.black54, size: 20),
+                    const Icon(Icons.list_alt_outlined,
+                        color: Colors.black54, size: 20),
                     SizedBox(width: 3),
-                    Text("1/10"),
-                    Spacer(),
-                    Icon(Icons.people_alt_outlined, color: Colors.black54, size: 20,),
-                    SizedBox(width: 3),
-                    CircleAvatar(radius: 10,),
-                    CircleAvatar(radius: 10,),
-                    CircleAvatar(radius: 10,),
+                    if (project.tasksCompletedCount != 0 &&
+                        project.tasksCount != 0)
+                      Text(
+                          "${project.tasksCompletedCount}/${project.tasksCount}")
+                    else
+                      const Text("-"),
+                    const Spacer(),
+                    const Icon(
+                      Icons.people_alt_outlined,
+                      color: Colors.black54,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 3),
+                    for (var member in project.members!.take(3))
+                      ClipOval(
+                        child: Image.network(
+                          member.profileUrl,
+                          width: 20,
+                        ),
+                      ),
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: kDefaultPadding * 0.5),
                 child: Text(
-                  "2/12/2021",
+                  project.createdAt,
                   textAlign: TextAlign.end,
                 ),
               ),

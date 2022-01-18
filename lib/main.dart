@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:progress_app/screens/auth/login.dart';
-import 'package:progress_app/screens/auth/register.dart';
-import 'package:progress_app/screens/dashboard/dashboard_screen.dart';
-import 'package:progress_app/screens/profile/profile_screen.dart';
-import 'package:progress_app/screens/projects/create.dart';
-import 'package:progress_app/screens/projects/detail.dart';
-import 'package:progress_app/screens/projects/projects_list.dart';
-import 'package:progress_app/screens/projects/task_detail.dart';
+import 'package:progress_app/ui/screens/auth/login.dart';
+import 'package:progress_app/ui/screens/auth/register.dart';
+import 'package:progress_app/ui/screens/dashboard/dashboard_screen.dart';
+import 'package:progress_app/ui/screens/profile/profile_screen.dart';
+import 'package:progress_app/ui/screens/projects/create.dart';
+import 'package:progress_app/ui/screens/projects/detail.dart';
+import 'package:progress_app/ui/screens/projects/projects_list.dart';
+import 'package:progress_app/ui/screens/projects/task_detail.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: kPrimaryColor,
         ),
+        primarySwatch: Colors.grey,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: kPrimaryColor,

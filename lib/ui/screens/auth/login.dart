@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
-import 'package:progress_app/screens/auth/register.dart';
+import 'package:progress_app/ui/screens/auth/register.dart';
 import 'package:progress_app/services/auth.dart';
 import 'package:progress_app/shared/application_logo.dart';
 import 'package:progress_app/shared/input_field.dart';

@@ -3,9 +3,9 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/models/project.dart';
-import 'package:progress_app/screens/projects/project_information_page.dart';
-import 'package:progress_app/screens/projects/project_member_page.dart';
-import 'package:progress_app/screens/projects/project_task_page.dart';
+import 'package:progress_app/ui/screens/projects/project_information_page.dart';
+import 'package:progress_app/ui/screens/projects/project_member_page.dart';
+import 'package:progress_app/ui/screens/projects/project_task_page.dart';
 
 class ProjectDetail extends StatefulWidget {
   const ProjectDetail({Key? key}) : super(key: key);

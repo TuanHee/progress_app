@@ -36,7 +36,7 @@ class _ProjectTaskListPageState extends State<ProjectTaskListPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0)
                 ),
-                child: Text(
+                child: const Text(
                   'Add',
                   style: TextStyle(color: Colors.white),
                 ),

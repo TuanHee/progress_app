@@ -48,7 +48,15 @@ class Body extends StatelessWidget {
                   );
                 }
               }),
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+          child: Row(
+            children: [
+              TitleWithCustomUnderline(title: "Assigned To You"),
+            ],
+          ),
+        ),
       ],
     );
   }

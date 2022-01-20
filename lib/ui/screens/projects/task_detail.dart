@@ -183,7 +183,7 @@ class _TaskScreenState extends State<TaskScreen> {
         children: [
           ClipOval(
             child: Image.network(
-              comment.member.user.profileUrl,
+              comment.member.user!.profileUrl,
               width: 35,
             ),
           ),
@@ -194,7 +194,7 @@ class _TaskScreenState extends State<TaskScreen> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: comment.member.user.name,
+                    text: comment.member.user!.name,
                     style: TextStyle(
                       fontSize: 12,
                       color: kPrimaryColor,

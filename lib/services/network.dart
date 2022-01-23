@@ -35,7 +35,7 @@ class NetworkService {
     );
   }
 
-  Future<http.Response> deleteRequest(String path, Map data) async {
+  Future<http.Response> deleteRequest(String path, {Map? data}) async {
     var url = Uri.parse(baseUrl + path);
 
     await _getToken();

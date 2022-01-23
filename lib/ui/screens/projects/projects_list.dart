@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/models/project.dart';
 import 'package:progress_app/services/network.dart';
-import 'package:progress_app/shared/header.dart';
 import 'package:progress_app/shared/side_menu.dart';
 
 class ProjectsScreen extends StatefulWidget {
@@ -18,15 +17,16 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Projects'),
+        title: const Text('Projects'),
         backgroundColor: Colors.white,
         foregroundColor: kPrimaryColor,
         elevation: 1,
       ),
-      drawer: SideMenu(),
+      drawer: const SideMenu(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         onPressed: () => Navigator.pushNamed(context, '/projects/create'),
       ),
       body: FutureBuilder<List<Project>>(
@@ -69,7 +69,7 @@ class ProjectsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: kDefaultPadding * .5),
+      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding * .5),
       itemCount: projects.length,
       itemBuilder: (context, index) {
         return ProjectItem(project: projects[index]);

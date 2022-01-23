@@ -1,6 +1,8 @@
 import 'dart:convert' as convert;
+import 'dart:developer';
 import 'dart:io';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:progress_app/models/user.dart';
 import 'package:progress_app/services/network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,7 +95,8 @@ class AuthService {
   }
 
   Future<User> getAuthUser() async {
-    var res = await NetworkService().getRequest('/user');
+    NetworkService networkService = NetworkService();
+    var res = await networkService.getRequest('/user');
 
     if (res.statusCode == 200) {
       Map<String, dynamic> json = convert.jsonDecode(res.body);
@@ -101,7 +104,6 @@ class AuthService {
     } else {
       throw Exception('Failed to load User');
     }
-
   }
 
   Future<String> _getDeviceInfo() async {
@@ -109,11 +111,16 @@ class AuthService {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      deviceModel = androidDeviceInfo.model;
+      deviceModel = androidDeviceInfo.model!;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      deviceModel = iosDeviceInfo.utsname.machine;
+      deviceModel = iosDeviceInfo.utsname.machine!;
+    } else if (kIsWeb) {
+      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+      deviceModel = webBrowserInfo.userAgent!;
     }
+
+    inspect(deviceModel);
 
     return deviceModel.toString();
   }

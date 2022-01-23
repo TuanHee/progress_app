@@ -31,7 +31,6 @@ class _ProjectMemberPageState extends State<ProjectMemberPage> {
     var parsed = convert
         .jsonDecode(response.body)['members']
         .cast<Map<String, dynamic>>();
-    inspect(parsed);
     return parsed.map<ProjectMember>((json) => ProjectMember.fromJson(json)).toList();
   }
 

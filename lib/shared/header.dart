@@ -9,7 +9,7 @@ class Header extends StatefulWidget with PreferredSizeWidget {
   _HeaderState createState() => _HeaderState();
 
   @override
-  final Size preferredSize = Size.fromHeight(kToolbarHeight);
+  final Size preferredSize = const Size.fromHeight(kToolbarHeight);
 }
 
 class _HeaderState extends State<Header> {

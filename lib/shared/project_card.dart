@@ -26,7 +26,7 @@ class ProjectCard extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             boxShadow: [
               BoxShadow(
-                  offset: Offset(1, 1),
+                  offset: const Offset(1, 1),
                   blurRadius: 10,
                   color: Colors.grey.withOpacity(0.3))
             ],
@@ -47,7 +47,7 @@ class ProjectCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.list_alt_outlined,
                         color: Colors.black54, size: 20),
-                    SizedBox(width: 3),
+                    const SizedBox(width: 3),
                     if (project.tasksCompletedCount != 0 &&
                         project.tasksCount != 0)
                       Text(
@@ -65,6 +65,9 @@ class ProjectCard extends StatelessWidget {
                       ClipOval(
                         child: Image.network(
                           member.profileUrl,
+                          errorBuilder: (_, obj, stackTrace) {
+                            return Icon(Icons.error);
+                          },
                           width: 20,
                         ),
                       ),

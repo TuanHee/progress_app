@@ -59,3 +59,21 @@ class Task {
     );
   }
 }
+
+class DueTask {
+  int id;
+  String title;
+  String dueAt;
+  bool due;
+
+  DueTask({required this.id, required this.title, required this.dueAt, required this.due});
+
+  factory DueTask.fromJson(Map<String, dynamic> json) {
+    return DueTask(
+      id: json['id'],
+      title: json['title'],
+      dueAt: json['due_at'],
+      due: json['due'],
+    );
+  }
+}

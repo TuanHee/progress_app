@@ -66,7 +66,7 @@ class ProjectCard extends StatelessWidget {
                         child: Image.network(
                           member.profileUrl,
                           errorBuilder: (_, obj, stackTrace) {
-                            return Icon(Icons.error);
+                            return const Icon(Icons.error);
                           },
                           width: 20,
                         ),

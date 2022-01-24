@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:progress_app/models/attachment.dart';
 import 'package:progress_app/models/task.dart';
@@ -187,7 +185,7 @@ class _TaskScreenState extends State<TaskScreen> {
               width: 35,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,24 +193,24 @@ class _TaskScreenState extends State<TaskScreen> {
                 RichText(
                   text: TextSpan(
                     text: comment.member.user!.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: kPrimaryColor,
                     ),
                     children: [
                       TextSpan(
                         text: " "+ comment.createdAt,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                         )
                       )
                     ]
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   comment.content,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                   ),
                 )

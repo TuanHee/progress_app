@@ -41,7 +41,7 @@ class _SideMenuState extends State<SideMenu> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (profileUrl == "")
-                  Icon(Icons.person_outlined, size: 30,)
+                  const Icon(Icons.person_outlined, size: 30,)
                 else
                   CircleAvatar(
                     radius: 30,
@@ -82,11 +82,11 @@ class _SideMenuState extends State<SideMenu> {
               );
             },
           ),
-          DrawerListTile(
-            title: "Notification",
-            icon: Icons.notifications_outlined,
-            press: () {},
-          ),
+          // DrawerListTile(
+          //   title: "Notification",
+          //   icon: Icons.notifications_outlined,
+          //   press: () {},
+          // ),
           DrawerListTile(
             title: "Profile",
             icon: Icons.person_outline,
@@ -100,7 +100,7 @@ class _SideMenuState extends State<SideMenu> {
             icon: Icons.security,
             press: () => {},
           ),
-          Divider(),
+          const Divider(),
           DrawerListTile(
             title: 'Logout',
             icon: Icons.logout_outlined,

@@ -40,7 +40,8 @@ class _ProjectInformationPageState extends State<ProjectInformationPage> {
             // FutureBuilder(
             //   future: ,
             // ),
-            Text(
+            InputField("Title", titleController),
+            const Text(
               "Description",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),

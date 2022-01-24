@@ -6,7 +6,7 @@ import 'package:progress_app/services/network.dart';
 import 'package:progress_app/shared/side_menu.dart';
 
 class ProjectsScreen extends StatefulWidget {
-  const ProjectsScreen({ Key? key }) : super(key: key);
+  const ProjectsScreen({Key? key}) : super(key: key);
 
   @override
   _ProjectsScreenState createState() => _ProjectsScreenState();
@@ -16,39 +16,57 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Projects'),
-        backgroundColor: Colors.white,
-        foregroundColor: kPrimaryColor,
-        elevation: 1,
-      ),
-      drawer: const SideMenu(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        backgroundColor: kPrimaryColor,
-        foregroundColor: Colors.white,
-        onPressed: () => Navigator.pushNamed(context, '/projects/create'),
-      ),
-      body: FutureBuilder<List<Project>>(
-        future: fetchProjects(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text("An error has occurred!"),
-            );
-          } else if (snapshot.hasData) {
-            return ProjectsList(projects: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      )
-    );
+        appBar: AppBar(
+          title: const Text('Projects'),
+          backgroundColor: Colors.white,
+          foregroundColor: kPrimaryColor,
+          elevation: 1,
+        ),
+        drawer: const SideMenu(),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          backgroundColor: kPrimaryColor,
+          foregroundColor: Colors.white,
+          onPressed: () => Navigator.pushNamed(context, '/projects/create'),
+        ),
+        body: FutureBuilder<List<Project>>(
+          future: fetchProjects(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text("An error has occurred!"),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data!.isEmpty) {
+                // return Center(
+                //   child: Container(
+                //       margin: EdgeInsets.all(50),
+                //       padding: EdgeInsets.all(20),
+                //       width: MediaQuery.of(context).size.width * .7,
+                //       color: Colors.blueGrey.shade100,
+                //       // decoration: BoxDecoration(),
+                //       child: Column(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: const [
+                //             Icon(Icons.sentiment_dissatisfied, size: 60),
+                //             SizedBox(height: 10),
+                //             Text('No data found')
+                //           ])),
+                // );
+                return const Center(child: Text("No data found"));
+              }
+              return ProjectsList(projects: snapshot.data!);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ));
   }
 
-  List<Project> parseProjects (String responseBody) {
+  List<Project> parseProjects(String responseBody) {
     var parsed = convert.jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
     return parsed.map<Project>((json) => Project.fromJson(json)).toList();
@@ -62,7 +80,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 }
 
 class ProjectsList extends StatelessWidget {
-  const ProjectsList({ Key? key, required this.projects }) : super(key: key);
+  const ProjectsList({Key? key, required this.projects}) : super(key: key);
 
   final List<Project> projects;
 
@@ -79,7 +97,7 @@ class ProjectsList extends StatelessWidget {
 }
 
 class ProjectItem extends StatelessWidget {
-  const ProjectItem({ Key? key, required this.project }) : super(key: key);
+  const ProjectItem({Key? key, required this.project}) : super(key: key);
 
   final Project project;
 
@@ -88,43 +106,36 @@ class ProjectItem extends StatelessWidget {
     return GestureDetector(
       child: Container(
         margin: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding * .5,
-          vertical: kDefaultPadding * .2
-        ),
+            horizontal: kDefaultPadding * .5, vertical: kDefaultPadding * .2),
         child: Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding * .5, 
-            vertical: kDefaultPadding * .5
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
+              horizontal: kDefaultPadding * .5, vertical: kDefaultPadding * .5),
+          decoration: BoxDecoration(color: Colors.white, boxShadow: [
+            BoxShadow(
                 offset: const Offset(0, 10),
                 blurRadius: 30,
-                color: kPrimaryColor.withOpacity(0.1)
-              ),
-            ]
-          ),
+                color: kPrimaryColor.withOpacity(0.1)),
+          ]),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 project.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 17,
                 ),
               ),
-              SizedBox(height: kDefaultPadding * .3),
+              const SizedBox(height: kDefaultPadding * .3),
               Text(
                 project.createdAt,
               ),
             ],
           ),
         ),
-      ),onTap: () => Navigator.pushNamed(context, '/projects/detail', arguments: project),
-      
+      ),
+      onTap: () =>
+          Navigator.pushNamed(context, '/projects/detail', arguments: project),
     );
   }
 }

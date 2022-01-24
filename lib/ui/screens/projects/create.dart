@@ -32,10 +32,10 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Project'),
+        title: const Text('Create Project'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding, vertical: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding, vertical: kDefaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -43,21 +43,21 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
               "Projects Create",
               style: Theme.of(context).textTheme.headline6!.copyWith(color: kPrimaryColor),
             ),
-            SizedBox(height: kDefaultPadding * .5),
+            const SizedBox(height: kDefaultPadding * .5),
             InputField(
               "Title",
               titleController,
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
+                  const Text(
                     "Description",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
-                  SizedBox(height: kDefaultPadding * .5),
+                  const SizedBox(height: kDefaultPadding * .5),
                   TextField(
                     controller: descriptionController,
                     minLines: 5,

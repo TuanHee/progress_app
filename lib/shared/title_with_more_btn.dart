@@ -18,13 +18,13 @@ class TitleWithMoreBtn extends StatelessWidget {
       child: Row(
         children: [
           TitleWithCustomUnderline(title: title),
-          Spacer(),
+          const Spacer(),
           MaterialButton(
             elevation: 0,
             color: kPrimaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            child: Text(
+            child: const Text(
               "More",
               style: TextStyle(color: Colors.white),
             ),

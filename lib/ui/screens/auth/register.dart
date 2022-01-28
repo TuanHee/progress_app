@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     passwordConfirmController,
                     isPassword: true
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   PrimaryButton(text: 'Register', press: () async => register()),
                   SizedBox(height: height * .1,),
                   _loginAccountLabel(),

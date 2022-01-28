@@ -1,5 +1,3 @@
-import 'dart:convert' as convert;
-
 import 'package:flutter/material.dart';
 import 'package:progress_app/shared/constants.dart';
 import 'package:progress_app/models/project.dart';
@@ -50,7 +48,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
           ),
         ),
         body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             ProjectInformationPage(project: project),
             ProjectTaskListPage(projectId: project.id),

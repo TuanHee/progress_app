@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final height = MediaQuery.of(context).size.height;
   
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: height,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               SizedBox(height: height * .15),
-              ApplicationLogo(),
+              const ApplicationLogo(),
               const SizedBox(height: 20,),
               InputField(
                 'Email',
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 passwordController,
                 isPassword: true,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               PrimaryButton(
                 text: "Login",
                 press: () async => _login(),

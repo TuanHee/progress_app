@@ -35,6 +35,18 @@ class NetworkService {
     );
   }
 
+  Future<http.Response> putRequest(String path, {Map? data}) async {
+    var url = Uri.parse(baseUrl + path);
+
+    await _getToken();
+
+    return await http.put(
+      url, 
+      headers: _setHeaders(),
+      body: data,
+    );
+  }
+
   Future<http.Response> deleteRequest(String path, {Map? data}) async {
     var url = Uri.parse(baseUrl + path);
 

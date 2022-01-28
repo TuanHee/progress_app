@@ -140,7 +140,7 @@ class _ProjectTaskListPageState extends State<ProjectTaskListPage> {
                   child: Text("An error has occurred!"),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
-                return TaskListWidget(
+                return TaskListListWidget(
                     taskLists: snapshot.data!,
                     size: size,
                     updateTaskList: () => setState(() {
@@ -171,8 +171,8 @@ class _ProjectTaskListPageState extends State<ProjectTaskListPage> {
   }
 }
 
-class TaskListWidget extends StatelessWidget {
-  const TaskListWidget({
+class TaskListListWidget extends StatelessWidget {
+  const TaskListListWidget({
     Key? key,
     required this.size,
     required this.taskLists,
@@ -190,132 +190,244 @@ class TaskListWidget extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: taskLists.length,
       itemBuilder: (context, index) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: kDefaultPadding * .5,
-              ),
-              width: (size.width * .95) - 40,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      const BorderRadius.only(topRight: Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: const Offset(3, 5),
-                        blurRadius: 10,
-                        color: kPrimaryColor.withOpacity(0.15))
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    taskLists[index].title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  ButtonBar(
-                    overflowButtonSpacing: 0,
-                    children: [
-                      MaterialButton(
-                        onPressed: () {},
-                        minWidth: 12,
-                        child: const Icon(Icons.add),
-                      ),
-                      MaterialButton(
-                        onPressed: () {},
-                        minWidth: 12,
-                        child: const Icon(Icons.edit),
-                      ),
-                      if (taskLists[index].tasks!.isEmpty)
-                        MaterialButton(
-                          onPressed: () => showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                    title: Row(
-                                      children: const [
-                                        Icon(
-                                          Icons.warning_amber_outlined,
-                                          color: Colors.red,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text('Delete Task List'),
-                                      ],
-                                    ),
-                                    content: const Text(
-                                        'Are you sure you want to delete the task list? This action cannot be undone.',
-                                        textAlign: TextAlign.justify),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: const Text('CANCEL')),
-                                      TextButton(
-                                          onPressed: () async {
-                                            var res = await NetworkService()
-                                                .deleteRequest(
-                                                    '/taskLists/${taskLists[index].id}');
-
-                                            if (res.statusCode == 200) {
-                                              Navigator.pop(context);
-                                              updateTaskList();
-                                            } else if (res.statusCode == 202) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                      content: Text('Error!')));
-                                            } else if (res.statusCode == 404) {
-                                              Navigator.pop(context);
-                                              updateTaskList();
-                                            }
-                                          },
-                                          child: const Text(
-                                            'DELETE',
-                                            style: TextStyle(
-                                                color: Colors.redAccent),
-                                          ))
-                                    ],
-                                  )),
-                          minWidth: 12,
-                          child: const Icon(Icons.delete),
-                        ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 500,
-              width: (size.width * .95) - 40,
-              child: taskLists[index].tasks!.isNotEmpty
-                  ? ListView.builder(
-                      padding:
-                          const EdgeInsets.only(bottom: kDefaultPadding * .3),
-                      itemCount: taskLists[index].tasks!.length,
-                      itemBuilder: (context, tasksIndex) {
-                        return TaskWidget(
-                          size: size,
-                          task: taskLists[index].tasks![tasksIndex],
-                        );
-                      },
-                    )
-                  : const Padding(
-                      padding: EdgeInsets.all(kDefaultPadding),
-                      child: Text(
-                        'Not Task Yet',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-            )
-          ],
-        );
+        return _TaskListItem(
+            size: size,
+            taskList: taskLists[index],
+            updateTaskList: updateTaskList);
       },
       separatorBuilder: (_, index) => const SizedBox(width: 20),
+    );
+  }
+}
+
+class _TaskListItem extends StatefulWidget {
+  const _TaskListItem({
+    Key? key,
+    required this.size,
+    required this.taskList,
+    required this.updateTaskList,
+  }) : super(key: key);
+
+  final Size size;
+  final TaskList taskList;
+  final VoidCallback updateTaskList;
+
+  @override
+  State<_TaskListItem> createState() => _TaskListItemState();
+}
+
+class _TaskListItemState extends State<_TaskListItem> {
+  TextEditingController titleController = TextEditingController();
+
+  @override
+  void initState() {
+    titleController.text = widget.taskList.title;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: kDefaultPadding * .5,
+          ),
+          width: (widget.size.width * .95) - 40,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius:
+                  const BorderRadius.only(topRight: Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(3, 5),
+                    blurRadius: 10,
+                    color: kPrimaryColor.withOpacity(0.15))
+              ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                widget.taskList.title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              ButtonBar(
+                overflowButtonSpacing: 0,
+                children: [
+                  MaterialButton(
+                    onPressed: () {},
+                    minWidth: 12,
+                    child: const Icon(Icons.add),
+                  ),
+                  MaterialButton(
+                    onPressed: () => showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25.0))),
+                        context: context,
+                        backgroundColor: Colors.white,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return Padding(
+                              padding: MediaQuery.of(context).viewInsets,
+                              child: Padding(
+                                padding: const EdgeInsets.all(kDefaultPadding),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text(
+                                      "Edit Task List",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    InputField(
+                                        "Task List Title", titleController),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        MaterialButton(
+                                            color: Colors.grey.shade100,
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text('Close')),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        MaterialButton(
+                                            color: kPrimaryColor,
+                                            textColor: Colors.white,
+                                            onPressed: () async {
+                                              String title =
+                                                  titleController.text.trim();
+
+                                              if (title.isEmpty) {
+                                                Navigator.pop(context);
+                                                titleController.text = widget.taskList.title;
+                                                const snackBar = SnackBar(
+                                                  elevation: 6.0,
+                                                  backgroundColor:
+                                                      dangerBgColor,
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  content: Text(
+                                                      'Title fields are required!'),
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              } else {
+                                                var res = await NetworkService()
+                                                    .putRequest(
+                                                  "/taskLists/${widget.taskList.id}",
+                                                  data: {
+                                                    "title": title,
+                                                  },
+                                                );
+
+                                                if (res.statusCode == 200) {
+                                                  setState(() {
+                                                    widget.updateTaskList();
+                                                  });
+                                                  Navigator.pop(context);
+                                                } else {
+                                                  inspect(res);
+                                                }
+                                              }
+                                            },
+                                            child: const Text('Update'))
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ));
+                        }),
+                    minWidth: 12,
+                    child: const Icon(Icons.edit),
+                  ),
+                  if (widget.taskList.tasks!.isEmpty)
+                    MaterialButton(
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.warning_amber_outlined,
+                                      color: Colors.red,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text('Delete Task List'),
+                                  ],
+                                ),
+                                content: const Text(
+                                    'Are you sure you want to delete the task list? This action cannot be undone.',
+                                    textAlign: TextAlign.justify),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('CANCEL')),
+                                  TextButton(
+                                      onPressed: () async {
+                                        var res = await NetworkService()
+                                            .deleteRequest(
+                                                '/taskLists/${widget.taskList.id}');
+
+                                        if (res.statusCode == 200) {
+                                          Navigator.pop(context);
+                                          widget.updateTaskList();
+                                        } else if (res.statusCode == 202) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text('Error!')));
+                                        } else if (res.statusCode == 404) {
+                                          Navigator.pop(context);
+                                          widget.updateTaskList();
+                                        }
+                                      },
+                                      child: const Text(
+                                        'DELETE',
+                                        style:
+                                            TextStyle(color: Colors.redAccent),
+                                      ))
+                                ],
+                              )),
+                      minWidth: 12,
+                      child: const Icon(Icons.delete),
+                    ),
+                ],
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 500,
+          width: (widget.size.width * .95) - 40,
+          child: widget.taskList.tasks!.isNotEmpty
+              ? ListView.builder(
+                  padding: const EdgeInsets.only(bottom: kDefaultPadding * .3),
+                  itemCount: widget.taskList.tasks!.length,
+                  itemBuilder: (context, tasksIndex) {
+                    return TaskWidget(
+                      size: widget.size,
+                      task: widget.taskList.tasks![tasksIndex],
+                    );
+                  },
+                )
+              : const Padding(
+                  padding: EdgeInsets.all(kDefaultPadding),
+                  child: Text(
+                    'Not Task Yet',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+        )
+      ],
     );
   }
 }

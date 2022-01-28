@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   draggable_home: ^1.0.2
   device_info_plus: ^3.2.1
+  syncfusion_flutter_datepicker: ^19.4.47
 
 dev_dependencies:
   flutter_test:

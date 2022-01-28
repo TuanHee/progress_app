@@ -261,7 +261,7 @@ class _TaskListItemState extends State<_TaskListItem> {
                 overflowButtonSpacing: 0,
                 children: [
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pushNamed(context, '/tasks/create'),
                     minWidth: 12,
                     child: const Icon(Icons.add),
                   ),
